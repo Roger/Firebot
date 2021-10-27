@@ -1,12 +1,15 @@
 "use strict";
 const EventEmitter = require("events");
-
 const effectManager = require("../../../effects/effectManager");
+const effect = require('./send-discord-message-effect')
 
 const integrationDefinition = {
     id: "discord",
     name: "Discord",
     description: "Send messages to Discord channels.",
+    addedTriggers: {
+        effects: [effect.definition.name]
+    },
     linkType: "none",
     connectionToggle: false,
     configurable: true,
@@ -51,7 +54,7 @@ class DiscordIntegration extends EventEmitter {
         super();
     }
     init() {
-        effectManager.registerEffect(require('./send-discord-message-effect'));
+        effectManager.registerEffect(effect);
     }
     onUserSettingsUpdate(integrationData) {}
     connect() {}

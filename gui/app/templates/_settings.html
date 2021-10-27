@@ -563,9 +563,19 @@
             >
               <div>
                 <span><b>{{integration.name}}</b></span>
-                <span class="muted" style="font-size: 13px; padding-left: 10px"
+                <span style="font-size: 13px; padding-left: 10px; opacity: 0.8"
                   >{{integration.description}}</span
                 >
+                <div style="font-size: 12px; margin-top: 5px;" class="muted">
+                  <span ng-if="integration.addedTriggers.effects" style="margin-right: 15px;">
+                    <b>Effects:</b>
+                    <span ng-repeat="trigger in integration.addedTriggers.effects">{{trigger}}<span ng-show="!$last">, </span></span>
+                  </span>
+                  <span ng-if="integration.addedTriggers.events">
+                    <b>Events:</b>
+                    <span ng-repeat="trigger in integration.addedTriggers.events">{{trigger}}<span ng-show="!$last">, </span></span>
+                  </span>
+                </div>
               </div>
               <div>
                 <button

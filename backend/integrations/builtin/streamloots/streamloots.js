@@ -10,6 +10,9 @@ const integrationDefinition = {
     id: "streamloots",
     name: "StreamLoots",
     description: "Chest purchase/Card redemption events",
+    addedTriggers: {
+        events: slootsEventHandler.events.map(e => e.name)
+    },
     connectionToggle: true,
     linkType: "id",
     idDetails: {

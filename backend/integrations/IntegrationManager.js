@@ -144,6 +144,7 @@ class IntegrationManager extends EventEmitter {
                     id: i.id,
                     name: i.name,
                     description: i.description,
+                    addedTriggers: i.addedTriggers,
                     linked: i.linked,
                     linkType: i.linkType,
                     connectionToggle: i.connectionToggle,

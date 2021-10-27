@@ -12,6 +12,10 @@ const integrationDefinition = {
     id: "streamlabs",
     name: "Streamlabs",
     description: "Donation and Extra Life Donation events",
+    addedTriggers: {
+        events: slEventHandler.events.map(e => e.name),
+        effects: slEffectsLoader.effects.map(e => e.definition.name)
+    },
     linkType: "auth",
     connectionToggle: true,
     authProviderDetails: {

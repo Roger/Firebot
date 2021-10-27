@@ -11,6 +11,9 @@ const integrationDefinition = {
     id: "tipeeestream",
     name: "TipeeeStream",
     description: "Donation events",
+    addedTriggers: {
+        events: tsEventHandler.events.map(e => e.name)
+    },
     connectionToggle: true,
     linkType: "auth",
     authProviderDetails: {

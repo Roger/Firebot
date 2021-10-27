@@ -9,6 +9,9 @@ const integrationDefinition = {
     id: "streamelements",
     name: "StreamElements",
     description: "Donation events",
+    addedTriggers: {
+        events: seEventsHandler.events.map(e => e.name)
+    },
     connectionToggle: true,
     linkType: "id",
     idDetails: {

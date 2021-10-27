@@ -43,6 +43,8 @@ const eventSourceDefinition = {
     ]
 };
 
+exports.events = eventSourceDefinition.events;
+
 exports.registerEvents = () => {
     eventManager.registerEventSource(eventSourceDefinition);
 };

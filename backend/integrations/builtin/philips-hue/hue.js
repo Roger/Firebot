@@ -6,15 +6,19 @@ const v3 = require('node-hue-api').v3,
     discovery = v3.discovery,
     hueApi = v3.api;
 
+const effectManager = require("../../../effects/effectManager");
+const effect = require("./effects/hue-scenes");
+
 const appName = 'Firebot';
 const deviceName = 'Firebot-Hue';
-
-const effectManager = require("../../../effects/effectManager");
 
 const integrationDefinition = {
     id: "hue",
     name: "Philips Hue",
     description: "Allows users to run hue specific effects. Press the link button on your hue bridge, then press link.",
+    addedTriggers: {
+        effects: [effect.definition.name]
+    },
     linkType: "other",
     connectionToggle: false
 };
@@ -41,7 +45,7 @@ class HueIntegration extends EventEmitter {
     init(linked, integrationData) {
         // Register hue specific events and variables here.
 
-        effectManager.registerEffect(require("./effects/hue-scenes"));
+        effectManager.registerEffect(effect);
 
         if (linked) {
             if (integrationData && integrationData.settings && integrationData.settings.user) {

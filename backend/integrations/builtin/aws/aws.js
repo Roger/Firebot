@@ -1,12 +1,15 @@
 "use strict";
 const EventEmitter = require("events");
-
 const effectManager = require("../../../effects/effectManager");
+const effect = require('./text-to-speech-polly-effect');
 
 const integrationDefinition = {
     id: "aws",
     name: "AWS",
     description: "Interact with Amazon Web Services.",
+    addedTriggers: {
+        effects: [effect.definition.name]
+    },
     linkType: "none",
     connectionToggle: false,
     configurable: true,
@@ -55,7 +58,7 @@ class AwsIntegration extends EventEmitter {
         super();
     }
     init() {
-        effectManager.registerEffect(require('./text-to-speech-polly-effect'));
+        effectManager.registerEffect(effect);
     }
     onUserSettingsUpdate(integrationData) { }
     connect() { }
