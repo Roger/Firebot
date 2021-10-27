@@ -58,13 +58,15 @@ const { EffectCategory } = require("../../shared/effect-constants");
             dismiss: "&",
             modalInstance: "<"
         },
-        controller: function(ngToast, backendCommunicator, utilityService, $scope, $timeout) {
+        controller: function(ngToast, backendCommunicator, utilityService, $scope, $timeout, integrationService) {
             let $ctrl = this;
 
             $ctrl.activeCategory = null;
-            $ctrl.categories = Object.values(EffectCategory);
+            $ctrl.categories = Object.values(EffectCategory).filter(c => c !== "integrations");
 
             $ctrl.selectedEffectDef = null;
+
+            $ctrl.hasIntegrations = false;
 
             $ctrl.effectDefs = [];
             $ctrl.$onInit = async function() {
@@ -79,7 +81,20 @@ const { EffectCategory } = require("../../shared/effect-constants");
                         let textB = b.name.toUpperCase();
                         return textA < textB ? -1 : textA > textB ? 1 : 0;
                     })
-                    .filter(e => !e.hidden);
+                    .filter(e => {
+                        const sourceId = e.id.split(":")[0];
+                        if (sourceId !== "twitch" && sourceId !== "firebot") {
+                            const effectActive = integrationService.getLinkedIntegrations().some(i => i.id === sourceId);
+
+                            if (effectActive) {
+                                $ctrl.categories.push("integrations");
+                            }
+
+                            return effectActive;
+                        }
+
+                        return !e.hidden;
+                    });
 
                 if ($ctrl.resolve.selectedEffectTypeId) {
                     $ctrl.selectedEffectDef = $ctrl.effectDefs.find(e => e.id === $ctrl.resolve.selectedEffectTypeId);

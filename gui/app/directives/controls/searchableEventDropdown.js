@@ -34,9 +34,7 @@
                 ctrl.options = events
                     .filter(e => {
                         if (e.sourceId !== "twitch" && e.sourceId !== "firebot") {
-                            const integrations = integrationService.getLinkedIntegrations();
-
-                            return integrations.find(i => i.id === e.sourceId);
+                            return integrationService.getLinkedIntegrations().some(i => i.id === e.sourceId);
                         }
 
                         return true;
