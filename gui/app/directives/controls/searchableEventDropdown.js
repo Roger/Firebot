@@ -21,7 +21,8 @@
             $element,
             $attrs,
             settingsService,
-            listenerService
+            listenerService,
+            integrationService
         ) {
             let ctrl = this;
 
@@ -30,11 +31,21 @@
 
             function getSelected() {
                 // sort events by name
-                ctrl.options = events.sort((a, b) => {
-                    let textA = a.name.toUpperCase();
-                    let textB = b.name.toUpperCase();
-                    return textA < textB ? -1 : textA > textB ? 1 : 0;
-                });
+                ctrl.options = events
+                    .filter(e => {
+                        if (e.sourceId !== "twitch" && e.sourceId !== "firebot") {
+                            const integrations = integrationService.getLinkedIntegrations();
+
+                            return integrations.find(i => i.id === e.sourceId);
+                        }
+
+                        return true;
+                    })
+                    .sort((a, b) => {
+                        let textA = a.name.toUpperCase();
+                        let textB = b.name.toUpperCase();
+                        return textA < textB ? -1 : textA > textB ? 1 : 0;
+                    });
 
                 //find the selected event in the list
                 ctrl.selectedEvent = ctrl.options.find(
